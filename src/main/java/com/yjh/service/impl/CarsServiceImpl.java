@@ -7,7 +7,14 @@ import com.yjh.service.CarsService;
 import com.yjh.utils.CheckUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.UUID;
 
 public class CarsServiceImpl implements CarsService{
@@ -62,4 +69,17 @@ public class CarsServiceImpl implements CarsService{
             return null;
         }
     }
+
+    @Override
+    public Page<Cars> queryCarPageable(Integer page,Integer size) {
+        Pageable pageable = new PageRequest(page,size,Sort.Direction.ASC);
+        return carsDaoJPA.findAll(pageable);
+    }
+
+    @Override
+    public void export(HttpServletRequest request, HttpServletResponse response){
+
+    }
+
+
 }

@@ -4,7 +4,12 @@ import com.yjh.controller.CarController;
 import com.yjh.entity.Cars;
 import com.yjh.resource.request.CarTemplateRequest;
 import com.yjh.service.CarsService;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 
 public class CarControllerImpl implements CarController {
 
@@ -30,4 +35,16 @@ public class CarControllerImpl implements CarController {
     public Cars queryCar(String id) {
         return carsService.queryCar(id);
     }
+
+    @Override
+    public Page<Cars> queryCarPageable(Integer page,Integer size) {
+        return carsService.queryCarPageable(page,size);
+    }
+
+    @Override
+    public void export(HttpServletRequest request, HttpServletResponse response) {
+        carsService.export(request,response);
+    }
+
+
 }
