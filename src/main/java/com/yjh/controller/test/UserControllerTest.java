@@ -5,7 +5,7 @@ import com.yjh.dao.UsersDao;
 import com.yjh.dao.UsersDaoJPA;
 import com.yjh.entity.Cars;
 import com.yjh.entity.Users;
-import com.yjh.service.UsersServiceTest;
+import com.yjh.service.test.UsersServiceTest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
