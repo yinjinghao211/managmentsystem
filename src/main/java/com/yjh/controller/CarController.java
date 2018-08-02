@@ -6,13 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
-/**
- *
- */
+@RestController
 public interface CarController {
     /**
      * 添加车辆
@@ -47,7 +42,7 @@ public interface CarController {
      * @return
      */
     @ResponseBody
-    @PostMapping(value = "/queryCar/{id}")
+    @RequestMapping(value = "/queryCar/{id}")
     Cars queryCar(@PathVariable String id);
 
     /**
@@ -55,11 +50,13 @@ public interface CarController {
      * @return
      */
     @ResponseBody
-    @PostMapping(value = "/queryCarPageable")
-    Page<Cars> queryCarPageable(@RequestParam(value = "page",defaultValue = "0") Integer page,
-                                @RequestParam(value = "size",defaultValue = "5") Integer size);
+    @RequestMapping(value = "/queryCarPageable/{page},{size}")
+    Page<Cars> queryCarPageable(@PathVariable(value = "page") Integer page,
+                                @PathVariable(value = "size") Integer size);
 
+    /**
+     * 导出车辆信息报表
+     */
     @RequestMapping(value = "/export")
-    @ResponseBody
-    void export(HttpServletRequest request, HttpServletResponse response);
+    void export();
 }

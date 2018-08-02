@@ -7,7 +7,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@ComponentScan(basePackages = {"com.yjh.controller","com.yjh.service", "com.yjh.utils"})
+@ComponentScan(basePackages = {"com.yjh.controller","com.yjh.service"})
 @EnableJpaRepositories("com.yjh.dao")
 @EntityScan("com.yjh.entity")
 @EnableAutoConfiguration

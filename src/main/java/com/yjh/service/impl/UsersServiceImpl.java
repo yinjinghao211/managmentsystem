@@ -9,9 +9,11 @@ import com.yjh.service.UsersService;
 import com.yjh.utils.CheckUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+@Service
 public class UsersServiceImpl implements UsersService{
 
     @Autowired

@@ -5,6 +5,7 @@ import com.yjh.resource.request.UsersTemplateRequest;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+@RestController
 public interface UserController {
     /**
      * 添加user

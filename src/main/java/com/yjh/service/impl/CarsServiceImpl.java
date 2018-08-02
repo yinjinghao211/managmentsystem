@@ -5,18 +5,20 @@ import com.yjh.entity.Cars;
 import com.yjh.resource.request.CarTemplateRequest;
 import com.yjh.service.CarsService;
 import com.yjh.utils.CheckUtil;
+import com.yjh.utils.ExcelUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public class CarsServiceImpl implements CarsService{
 
     @Autowired
@@ -60,6 +62,7 @@ public class CarsServiceImpl implements CarsService{
 
     @Override
     public Cars queryCar(String id) {
+        System.out.println(id+"---------------------------------");
         CheckUtil.checkArgument(id!=null);
         try{
             Cars cars = carsDaoJPA.findOne(id);
@@ -72,14 +75,27 @@ public class CarsServiceImpl implements CarsService{
 
     @Override
     public Page<Cars> queryCarPageable(Integer page,Integer size) {
-        Pageable pageable = new PageRequest(page,size,Sort.Direction.ASC);
+        Sort sort = new Sort(Sort.Direction.ASC,"carId");
+        Pageable pageable = new PageRequest(page,size,sort);
         return carsDaoJPA.findAll(pageable);
     }
 
     @Override
-    public void export(HttpServletRequest request, HttpServletResponse response){
-
+    public void export(){
+        ExcelUtil<Cars> excelUtil = new ExcelUtil();
+        List<String> headerName = new ArrayList<>();
+        headerName.add("车辆ID");
+        headerName.add("车辆名称");
+        headerName.add("车牌号");
+        headerName.add("车辆身份");
+        headerName.add("用户ID");
+        List<String> headerId = new ArrayList<>();
+        headerId.add("carId");
+        headerId.add("carName");
+        headerId.add("carNumber");
+        headerId.add("carType");
+        headerId.add("userId");
+        List<Cars> carsList =carsDaoJPA.findAll();
+        excelUtil.exportExcel("车辆导出报表",headerName,headerId,carsList);
     }
-
-
 }

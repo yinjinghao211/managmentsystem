@@ -4,46 +4,49 @@ import com.yjh.controller.CarController;
 import com.yjh.entity.Cars;
 import com.yjh.resource.request.CarTemplateRequest;
 import com.yjh.service.CarsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-
+@RestController
 public class CarControllerImpl implements CarController {
 
+    @Autowired
     private CarsService carsService;
 
-    @ResponseBody
+
     @Override
-    public int addCar(CarTemplateRequest carTemplateRequest) {
+    public int addCar(@RequestBody CarTemplateRequest carTemplateRequest) {
         return carsService.addCar(carTemplateRequest);
     }
 
     @Override
-    public void deleteCar(String id) {
+    public void deleteCar(@PathVariable  String id) {
         carsService.deleteCar(id);
     }
 
     @Override
-    public int updateCar(CarTemplateRequest carTemplateRequest, String id) {
+    public int updateCar(@RequestBody CarTemplateRequest carTemplateRequest,@PathVariable String id) {
         return carsService.updateCar(carTemplateRequest,id);
     }
 
     @Override
-    public Cars queryCar(String id) {
+    public Cars queryCar(@PathVariable String id) {
+        System.out.println("---------------------"+id);
         return carsService.queryCar(id);
     }
 
     @Override
-    public Page<Cars> queryCarPageable(Integer page,Integer size) {
+    public Page<Cars> queryCarPageable(@PathVariable Integer page,@PathVariable Integer size) {
         return carsService.queryCarPageable(page,size);
     }
 
     @Override
-    public void export(HttpServletRequest request, HttpServletResponse response) {
-        carsService.export(request,response);
+    public void export() {
+        carsService.export();
     }
 
 

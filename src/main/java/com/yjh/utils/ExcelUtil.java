@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
-import com.yjh.entity.Cars;
+import com.yjh.entity.Users;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -17,6 +17,9 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 
 public class ExcelUtil<T> {
+
+    private HSSFWorkbook wb;
+
     /**
      * 这是一个通用的方法，利用了JAVA的反射机制，可以将放置在JAVA集合中并且符号一定条件的数据以EXCEL 的形式输出
      * title 表格标题名 headersName 表格属性列名数组 headersId
@@ -43,8 +46,7 @@ public class ExcelUtil<T> {
                 value++;
             }
         }
-        /* （三）声明一个工作薄：包括构建工作簿、表格、样式 */
-        HSSFWorkbook wb = new HSSFWorkbook();
+        wb = new HSSFWorkbook();
         HSSFSheet sheet = wb.createSheet(title);
         sheet.setDefaultColumnWidth((short) 15);
         // 生成一个样式
@@ -52,7 +54,7 @@ public class ExcelUtil<T> {
         HSSFRow row = sheet.createRow(0);
         style.setAlignment(HorizontalAlignment.CENTER);
         HSSFCell cell;
-        Collection c = headersNameMap.values();// 拿到表格所有标题的value的集合
+        Collection<String> c = headersNameMap.values();// 拿到表格所有标题的value的集合
         Iterator<String> it = c.iterator();// 表格标题的迭代器
         /* （四）导出数据：包括导出标题栏以及内容栏 */
         // 根据选择的字段生成表头
@@ -64,7 +66,7 @@ public class ExcelUtil<T> {
             size++;
         }
         // 表格标题一行的字段的集合
-        Collection zdC = titleFieldMap.values();
+        Collection<String> zdC = titleFieldMap.values();
         Iterator<T> labIt = dtoList.iterator();// 总记录的迭代器
         int zdRow = 0;// 列序号
         while (labIt.hasNext()) {// 记录的迭代器，遍历总记录
@@ -81,7 +83,7 @@ public class ExcelUtil<T> {
                 while (zdIt.hasNext()) {// 遍历要导出的字段集合
                     if (zdIt.next().equals(fieldName)) {// 比对JavaBean的属性名，一致就写入，不一致就丢弃
                         String getMethodName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);// 拿到属性的get方法
-                        Class tCls = l.getClass();// 拿到JavaBean对象
+                        Class<? extends Object> tCls = l.getClass();// 拿到JavaBean对象
                         try {
                             Method getMethod = tCls.getMethod(getMethodName, new Class[] {});// 通过JavaBean对象拿到该属性的get方法，从而进行操控
                             Object val = getMethod.invoke(l, new Object[] {});// 操控该对象属性的get方法，从而拿到属性值
@@ -109,7 +111,7 @@ public class ExcelUtil<T> {
             }
         }
         try {
-            FileOutputStream exportXls = new FileOutputStream("E://工单信息表.xls");
+            FileOutputStream exportXls = new FileOutputStream("E://信息表.xls");
             wb.write(exportXls);
             exportXls.close();
             System.out.println("导出成功!");
@@ -122,21 +124,23 @@ public class ExcelUtil<T> {
         }
     }
 
-    public static void main(String[] args) {
-        List<String> listName = new ArrayList<>();
-        listName.add("id");
-        listName.add("名字");
-        listName.add("性别");
-        List<String> listId = new ArrayList<>();
-        listId.add("id");
-        listId.add("name");
-        listId.add("sex");
-        List<Cars> message = new ArrayList<>();
-        message.add(new Cars("scsacas","sadasd","dasdsads","sadasdasd","asdada"));
-        message.add(new Cars("scsacas","sadasd","dasdsads","sadasdasd","asdada"));
-        message.add(new Cars("scsacas","sadasd","dasdsads","sadasdasd","asdada"));
+//    public static void main(String[] args) {
+//        List<String> listName = new ArrayList<>();
+//        listName.add("id");
+//        listName.add("名字");
+//        listName.add("性别");
+//        List<String> listId = new ArrayList<>();
+//        lie.add(new Users("asdas","dsadsad","dsad"));
+//        messagestId.add("id");
+//        listId.add("name");
+//        listId.add("sex");
+//        List<Users> message = new ArrayList<>();
+//        messag.add(new Users("sdada", "李四asd", "男"));
+//        message.add(new Users("sdagdd", "王五", "女"));
+//
+//        ExcelUtil<Users> exportBeanExcelUtil = new ExcelUtil<>();
+//        exportBeanExcelUtil.exportExcel("POI导出EXCEL文档", listName, listId, message);
+//
+//    }
 
-        ExcelUtil<Cars> exportBeanExcelUtil = new ExcelUtil();
-        exportBeanExcelUtil.exportExcel("POI导出EXCEL文档", listName, listId, message);
-    }
 }

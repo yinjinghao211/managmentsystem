@@ -2,7 +2,9 @@ package com.yjh.service;
 
 import com.yjh.entity.Users;
 import com.yjh.resource.request.UsersTemplateRequest;
+import org.springframework.stereotype.Service;
 
+@Service
 public interface UsersService {
     /**
      * 添加用户

@@ -3,10 +3,10 @@ package com.yjh.service;
 import com.yjh.entity.Cars;
 import com.yjh.resource.request.CarTemplateRequest;
 import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
+@Service
 public interface CarsService {
     int addCar(CarTemplateRequest carTemplateRequest);
 
@@ -18,5 +18,5 @@ public interface CarsService {
 
     Page<Cars> queryCarPageable(Integer page,Integer size);
 
-    void export(HttpServletRequest request, HttpServletResponse response);
+    void export();
 }
