@@ -18,8 +18,8 @@ public class CarInfoControllerImpl implements CarInfoController {
     @Autowired
     private CarInfoService carInfoService;
     @Override
-    public List<CarInfo> queryCarInfo(@PathVariable String message) {
-        return carInfoService.queryCarInfo(message);
+    public List<CarInfo> queryCarInfo(@RequestBody CarInfoTemplateRequest message, @PathVariable String carType) {
+        return carInfoService.queryCarInfo(message, carType);
     }
 
     @Override

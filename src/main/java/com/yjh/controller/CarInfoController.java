@@ -2,7 +2,6 @@ package com.yjh.controller;
 
 import com.yjh.entity.CarInfo;
 import com.yjh.resource.request.CarInfoTemplateRequest;
-import com.yjh.resource.request.CarTemplateRequest;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +17,8 @@ public interface CarInfoController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "queryCarInfo/{message}")
-    List<CarInfo> queryCarInfo(@PathVariable String message);
+    @RequestMapping(value = "queryCarInfo/{carType}")
+    List<CarInfo> queryCarInfo(@RequestBody CarInfoTemplateRequest message, @PathVariable String carType);
 
     /**
      * 按照carId增加车辆信息,生成一个空的信息，之后update

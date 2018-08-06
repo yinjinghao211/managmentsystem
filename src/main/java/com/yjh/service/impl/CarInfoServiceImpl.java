@@ -22,15 +22,14 @@ public class CarInfoServiceImpl implements CarInfoService {
     @Autowired
     private CarsDaoJPA carsDaoJPA;
     @Override
-    public List<CarInfo> queryCarInfo(String message) {
+    public List<CarInfo> queryCarInfo(CarInfoTemplateRequest message, String carType) {
         //https://www.cnblogs.com/rulian/p/6533109.html
         CheckUtil.checkArgument(message!=null);
-        //查询carId是message的对象
+        //查询carInfo是message的对象
         CarInfo carInfo = new CarInfo();
-        carInfo.setCarId(message);
-
+        carInfo.setParkingTime(message.getParkingTime());
         ExampleMatcher matcher = ExampleMatcher.matching()
-                .withMatcher("carId", ExampleMatcher.GenericPropertyMatchers.startsWith())//id采用开始匹配方式查询
+                .withMatcher("parkingTime", ExampleMatcher.GenericPropertyMatchers.startsWith())//parkingTime采用开始匹配方式查询
                 .withIgnoreCase()//忽略大小写
                 .withIgnorePaths("carInfoId");//忽略属性
 

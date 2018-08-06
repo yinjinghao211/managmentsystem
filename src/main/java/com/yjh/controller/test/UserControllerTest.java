@@ -3,7 +3,9 @@ package com.yjh.controller.test;
 import com.yjh.dao.CarsDaoJPA;
 import com.yjh.dao.UsersDao;
 import com.yjh.dao.UsersDaoJPA;
+import com.yjh.dao.impl.DatesDaoJPA;
 import com.yjh.entity.Cars;
+import com.yjh.entity.Dates;
 import com.yjh.entity.Users;
 import com.yjh.service.test.UsersServiceTest;
 
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.UUID;
 
 
@@ -27,6 +30,8 @@ public class UserControllerTest {
     private UsersServiceTest usersServiceTest;
     @Autowired
     private StringRedisTemplate template;
+    @Autowired
+    private DatesDaoJPA datesDaoJPA;
     private UsersDao usersDao;
     //使用jpa
     @RequestMapping("/getUsers/{id}")
@@ -58,5 +63,15 @@ public class UserControllerTest {
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
+    }
+
+    @RequestMapping("setDates/{date}")
+    public void setDates(@PathVariable String date) {
+        System.out.println(date + "---------------------");
+        Dates dates = new Dates();
+        //2018年，1月
+        dates.setDates(new Date(118, 0, 1, 3, 2, 1));
+        dates.setDateId(UUID.randomUUID().toString().replaceAll("-", ""));
+        datesDaoJPA.save(dates);
     }
 }

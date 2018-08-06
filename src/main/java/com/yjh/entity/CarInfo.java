@@ -20,6 +20,10 @@ public class CarInfo implements Serializable{
     @Column(length = 32)
     private String carInfoId;
     @Column
+    private String carId;
+    @Column
+    private String parkingId;
+    @Column
     private String carCharge;
     @Column
     private String parkingTime;
@@ -43,6 +47,5 @@ public class CarInfo implements Serializable{
     private String travelRecord;
     @Column
     private String carModifyTime;
-    @Column
-    private String carId;
+
 }
